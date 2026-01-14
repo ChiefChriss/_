@@ -1,0 +1,195 @@
+:root{
+    --deep:#0b0f1a;
+    --ember1:#ff8a00;
+    --ember2:#ff2a00;
+    --glow: rgba(255,100,20,0.25);
+    --card-bg: rgba(255,255,255,0.02);
+    --accent: #ffd580;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+    min-height:100vh;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:
+        radial-gradient(1200px 600px at 10% 20%, rgba(255,110,30,0.12), transparent 12%),
+        radial-gradient(900px 400px at 90% 80%, rgba(255,40,0,0.10), transparent 10%),
+        linear-gradient(180deg, #07060a 0%, #140612 30%, #2b0700 100%);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+/* animated flame wash */
+body::before{
+    content:"";
+    position:fixed;
+    inset:-20%;
+    background: radial-gradient(30% 45% at 30% 40%, rgba(255,120,30,0.18), transparent 15%),
+                            radial-gradient(25% 40% at 70% 70%, rgba(255,40,0,0.14), transparent 12%);
+    filter: blur(40px) saturate(140%);
+    animation: wash 12s linear infinite;
+    z-index:0;
+    pointer-events:none;
+}
+
+/* embers rising */
+body::after{
+    content:"";
+    position:fixed;
+    left:50%;
+    bottom:-10%;
+    width:6px;
+    height:6px;
+    background: radial-gradient(circle, var(--ember1) 0 30%, transparent 35%),
+                            radial-gradient(circle, var(--ember2) 0 30%, transparent 35%);
+    border-radius:50%;
+    box-shadow:
+        -260px -20px var(--ember1),
+        -120px -80px var(--ember2),
+        -40px -120px var(--ember1),
+        80px -40px var(--ember2),
+        200px -160px var(--ember1),
+        300px -60px var(--ember2);
+    filter: blur(6px);
+    opacity:0.9;
+    transform: translateY(0) scale(0.6);
+    animation: embers 8s linear infinite;
+    z-index:0;
+    pointer-events:none;
+}
+
+/* container */
+.container{
+    position:relative;
+    z-index:1;
+    width:min(980px,94%);
+    padding:48px;
+    display:grid;
+    gap:28px;
+    grid-template-columns: 1fr;
+    align-items:center;
+}
+
+/* glass card */
+.card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:16px;
+    padding:28px;
+    box-shadow: 0 20px 50px rgba(11,10,15,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.04);
+    backdrop-filter: blur(8px) saturate(120%);
+}
+
+/* big fiery heading */
+.fire-title{
+    font-size:clamp(28px,6vw,64px);
+    line-height:1;
+    font-weight:800;
+    letter-spacing:-0.02em;
+    background: linear-gradient(90deg, #fff, #ffd580 18%, #ff6b00 45%, #ff2a00 70%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    text-shadow:
+        0 6px 30px rgba(255,80,10,0.12),
+        0 2px 6px rgba(0,0,0,0.6);
+    animation: flicker 3s steps(6, end) infinite;
+    margin-bottom:6px;
+}
+
+/* subtitle */
+.subtitle{
+    color:rgba(255,230,200,0.85);
+    font-weight:600;
+    opacity:0.95;
+}
+
+/* fire button */
+.btn-fire{
+    display:inline-grid;
+    place-items:center;
+    padding:14px 28px;
+    border-radius:999px;
+    background: linear-gradient(180deg, #ff8a1a, #ff2a00);
+    color:#111;
+    font-weight:700;
+    letter-spacing:0.02em;
+    box-shadow: 0 8px 30px var(--glow), 0 2px 0 rgba(0,0,0,0.25) inset;
+    border:none;
+    cursor:pointer;
+    transform:translateZ(0);
+    transition: transform .18s ease, box-shadow .18s ease;
+    position:relative;
+    overflow:hidden;
+}
+
+/* tiny sparks on button */
+.btn-fire::before, .btn-fire::after{
+    content:"";
+    position:absolute;
+    width:120%;
+    height:120%;
+    top:-10%;
+    left:-10%;
+    background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.12), transparent 8%),
+                            radial-gradient(circle at 80% 70%, rgba(255,230,160,0.06), transparent 8%);
+    mix-blend-mode: screen;
+    pointer-events:none;
+    transform: translateY(0);
+    transition:opacity .25s;
+}
+.btn-fire:hover{ transform: translateY(-4px) scale(1.02); box-shadow: 0 18px 60px rgba(255,90,20,0.28) }
+.btn-fire:active{ transform: translateY(-1px) scale(.995) }
+
+/* subtle content layout */
+.row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.lead{font-size:14px;color:rgba(255,240,220,0.9)}
+
+/* small tag-like flame */
+.pill{
+    padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px;
+    background: linear-gradient(90deg,#ff3f00,#ffb47a);
+    color:#221;
+    box-shadow: 0 6px 18px rgba(255,100,30,0.12);
+}
+
+/* utilities */
+.center{display:flex;align-items:center;justify-content:center}
+
+/* login form styles */
+.login-form{margin-top:18px;display:flex;flex-direction:column;gap:14px}
+.form-group label{display:block;margin-bottom:6px;color:rgba(255,230,200,0.95);font-weight:600}
+.form-group input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:inherit;outline:none}
+.form-group input::placeholder{color:rgba(255,230,200,0.45)}
+.form-group input:focus{box-shadow:0 10px 30px rgba(255,110,30,0.10);border-color:rgba(255,160,60,0.12)}
+.login-actions{display:flex;align-items:center;gap:12px;justify-content:space-between;margin-top:6px}
+
+
+/* animations */
+@keyframes wash{
+    0%{ transform: scale(1) translate(0,0) }
+    50%{ transform: scale(1.05) translate(-3%,2%) }
+    100%{ transform: scale(1) translate(0,0) }
+}
+@keyframes embers{
+    0%{ transform: translateY(0) scale(0.5); opacity:1; filter: blur(6px) }
+    70%{ transform: translateY(-140vh) scale(1) ; opacity:0.6; filter: blur(14px) }
+    100%{ transform: translateY(-200vh) scale(1.2); opacity:0; filter: blur(20px) }
+}
+@keyframes flicker{
+    0%{ text-shadow: 0 6px 30px rgba(255,90,20,0.12) }
+    10%{ text-shadow: 0 6px 60px rgba(255,120,20,0.18) }
+    20%{ text-shadow: 0 4px 20px rgba(255,80,10,0.08) }
+    40%{ text-shadow: 0 8px 40px rgba(255,140,40,0.18) }
+    100%{ text-shadow: 0 6px 30px rgba(255,90,20,0.12) }
+}
+
+/* responsive niceties */
+@media (min-width:860px){
+    .container{grid-template-columns: 1fr 380px}
+    .card{padding:36px}
+}

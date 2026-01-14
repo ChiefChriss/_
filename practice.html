@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>hello World</title>
+    <link rel="stylesheet" href="styling.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div>
+                <h1 class="fire-title">hello World</h1>
+                <p class="subtitle">Sign in to continue</p>
+            </div>
+
+            <form class="login-form" action="#" method="post" aria-label="Login form">
+                <div class="form-group">
+                    <label for="email" class="lead">Email</label>
+                    <input id="email" name="email" type="email" placeholder="you@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="lead">Password</label>
+                    <input id="password" name="password" type="password" placeholder="Enter your password" required>
+                </div>
+
+                <div class="row login-actions">
+                    <label class="lead" style="display:flex;align-items:center;gap:8px"><input type="checkbox" name="remember"> Remember me</label>
+                    <div style="display:flex;gap:8px">
+                        <button id="btnLogin" class="btn-fire" type="button">Sign in</button>
+                        <button id="btnRegister" class="btn-fire" type="button">Create account</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        async function postJSON(url, data){
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            return res.json();
+        }
+
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const msg = (t)=> alert(t);
+
+        document.getElementById('btnRegister').addEventListener('click', async ()=>{
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+            if(!email || !password){ msg('Provide email and password'); return }
+            const r = await postJSON('/api/register', { email, password });
+            if(r.ok) msg('Account created — you can now sign in'); else msg(r.error || 'Failed');
+        });
+
+        document.getElementById('btnLogin').addEventListener('click', async ()=>{
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+            if(!email || !password){ msg('Provide email and password'); return }
+            const r = await postJSON('/api/login', { email, password });
+            if(r.ok){
+                // redirect to success page after login
+                window.location.href = '/success.html';
+            } else {
+                msg(r.error || 'Login failed');
+            }
+        });
+    </script>
+</body>
+</html>
