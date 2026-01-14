@@ -52,7 +52,7 @@
             const email = emailInput.value.trim();
             const password = passwordInput.value;
             if(!email || !password){ msg('Provide email and password'); return }
-            const r = await postJSON('/api/register', { email, password });
+            const r = await postJSON('/.netlify/functions/register', { email, password });
             if(r.ok) msg('Account created — you can now sign in'); else msg(r.error || 'Failed');
         });
 
@@ -60,7 +60,7 @@
             const email = emailInput.value.trim();
             const password = passwordInput.value;
             if(!email || !password){ msg('Provide email and password'); return }
-            const r = await postJSON('/api/login', { email, password });
+            const r = await postJSON('/.netlify/functions/login', { email, password });
             if(r.ok){
                 // redirect to success page after login
                 window.location.href = '/success.html';
